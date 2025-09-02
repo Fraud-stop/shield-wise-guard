@@ -203,7 +203,7 @@ export function Home() {
 
             {/* Live Stats Ticker */}
               <motion.div
-                className="mt-12 flex justify-center items-center space-x-8 text-sm text-muted-foreground"
+                className="mt-12 flex justify-center items-center space-x-8 text-sm font-bold text-white drop-shadow-[0_0_8px_rgba(59,130,246,0.7)]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 3, duration: 1 }}
