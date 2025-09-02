@@ -31,6 +31,9 @@ const FloatingParticle = ({ delay = 0, duration = 4, x = 0, y = 0, icon: Icon }:
 );
 export function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const isMobile = window.innerWidth < 640;
+  const isDesktop = window.innerWidth >= 640;
+  const [showTypewriter, setShowTypewriter] = useState(isDesktop);
   const controls = useAnimation();
 
   useEffect(() => {
@@ -40,6 +43,15 @@ export function Home() {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  useEffect(() => {
+    if (isDesktop) {
+      const timer = setTimeout(() => setShowTypewriter(false), 3500);
+      return () => clearTimeout(timer);
+    } else {
+      setShowTypewriter(false);
+    }
+  }, [isDesktop]);
 
   const stats = [
     { label: "Threats Blocked", value: "12,847", icon: Shield, color: "text-red-400" },
@@ -124,21 +136,25 @@ export function Home() {
             </motion.div>
             
             <motion.h1 
-                className="text-5xl md:text-7xl font-extrabold text-primary mb-4"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold text-primary mb-4 min-h-[3.5rem] md:min-h-[5rem] flex items-center justify-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 1 }}
               >
                 <motion.span>
-                  <Typewriter
-                    words={["FRAUD STOP", "Next-Gen Cyber Shield"]}
-                    loop={0}
-                    cursor
-                    cursorStyle="_"
-                    typeSpeed={70}
-                    deleteSpeed={50}
-                    delaySpeed={1500}
-                  />
+                  {showTypewriter ? (
+                    <Typewriter
+                      words={["FRAUD STOP", "Next-Gen Cyber Shield"]}
+                      loop={1}
+                      cursor
+                      cursorStyle="_"
+                      typeSpeed={60}
+                      deleteSpeed={40}
+                      delaySpeed={1200}
+                    />
+                  ) : (
+                    "FRAUD STOP - Next-Gen Cyber Shield"
+                  )}
                 </motion.span>
             </motion.h1>
             
