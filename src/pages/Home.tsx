@@ -5,76 +5,29 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useState } from "react";
-import ReactTyped from "react-typed";
+// ...existing code...
 
 // Floating particle component
-const FloatingParticle = ({ delay = 0, duration = 4, x = 0, y = 0, icon: Icon }: any) => {
-  return (
-    <motion.div
-      className="absolute opacity-20"
-      initial={{ x: x, y: y, opacity: 0 }}
-      animate={{ 
-        x: x + Math.random() * 100 - 50,
-        y: y + Math.random() * 100 - 50,
-        opacity: [0, 0.3, 0],
-        scale: [0.8, 1.2, 0.8],
-      }}
-      transition={{
-        duration: duration,
-        delay: delay,
-        repeat: Infinity,
-        repeatType: "reverse",
-        ease: "easeInOut"
-      }}
-    >
-      <Icon className="h-6 w-6 text-primary" />
-    </motion.div>
-  );
-};
-
-// Matrix-style code rain
-const CodeRain = () => {
-  const [codes, setCodes] = useState<string[]>([]);
-  
-  useEffect(() => {
-    const codeSnippets = [
-      "if(scam.detected)", 
-      "blockchain.verify()",
-      "AI.analyze(url)",
-      "fraud.prevent()",
-      "security.check()",
-      "community.alert()",
-      "protection.enable()",
-      "threat.neutralized()"
-    ];
-    setCodes(codeSnippets);
-  }, []);
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {codes.map((code, i) => (
-        <motion.div
-          key={i}
-          className="absolute text-xs text-primary/20 font-mono"
-          initial={{ y: -20, x: Math.random() * window.innerWidth }}
-            animate={{
-              y: window.innerHeight + 20,
-              x: Math.min(Math.max(0, Math.random() * window.innerWidth), window.innerWidth - 100)
-            }}
-          transition={{
-            duration: Math.random() * 3 + 2,
-            delay: i * 0.5,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-        >
-          {code}
-        </motion.div>
-      ))}
-    </div>
-  );
-};
-
+const FloatingParticle = ({ delay = 0, duration = 4, x = 0, y = 0, icon: Icon }: any) => (
+  <motion.div
+    className="absolute opacity-20"
+    initial={{ x: x, y: y, opacity: 0 }}
+    animate={{ 
+      x: x + Math.random() * 100 - 50,
+      y: y + Math.random() * 100 - 50,
+      opacity: [0, 0.3, 0],
+    }}
+    transition={{
+      duration: duration,
+      delay: delay,
+      repeat: Infinity,
+      repeatType: "reverse",
+      ease: "easeInOut"
+    }}
+  >
+    <Icon className="h-6 w-6 text-primary" />
+  </motion.div>
+);
 export function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const controls = useAnimation();
@@ -132,9 +85,7 @@ export function Home() {
     <style>{`body { overflow-x: hidden !important; }`}</style>
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/20" />
       
-      {/* Matrix Code Rain */}
-      <CodeRain />
-      
+      {/* Matrix Code Rain removed */}
       {/* Floating Particles */}
       <FloatingParticle delay={0} x={100} y={200} icon={Shield} />
       <FloatingParticle delay={1} x={300} y={150} icon={Lock} />
@@ -168,13 +119,7 @@ export function Home() {
               transition={{ delay: 0.2, duration: 0.6 }}
             >
               <Badge className="mb-6 gradient-security text-white border-0 px-6 py-2 text-sm backdrop-blur-sm" variant="secondary">
-                <Globe className="w-4 h-4 mr-2 animate-pulse" />
-                <ReactTyped
-                  strings={["AI-Powered Protection", "Real-time Threat Detection", "Community-Driven Security"]}
-                  typeSpeed={50}
-                  backSpeed={30}
-                  loop
-                />
+                  <Globe className="w-4 h-4 mr-2 animate-pulse" />
               </Badge>
             </motion.div>
             
@@ -185,12 +130,7 @@ export function Home() {
                 transition={{ delay: 0.6, duration: 1 }}
               >
                 <motion.span>
-                  <ReactTyped
-                    strings={["FRAUD STOP"]}
-                    typeSpeed={80}
-                    showCursor={true}
-                    cursorChar="|"
-                  />
+                    FRAUD STOP
                 </motion.span>
                 <motion.span 
                   className="block text-foreground text-3xl md:text-5xl mt-4"
@@ -220,72 +160,33 @@ export function Home() {
                   asChild
                 >
                   <Link to="/checker">
-                    <motion.div
-                      className="absolute inset-0 bg-white/20"
-                      initial={{ x: "-100%" }}
-                      whileHover={{ x: "100%" }}
-                      transition={{ duration: 0.5 }}
-                    />
                     <Search className="mr-3 h-6 w-6" />
                     Analyze Threat Vector
-                  </Link>
-                </Button>
-              </motion.div>
-              
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="px-8 py-4 text-lg border-primary/50 text-primary hover:bg-primary/10 backdrop-blur-sm"
-                  asChild
-                >
-                  <Link to="/education">
-                    <Code2 className="mr-3 h-6 w-6" />
-                    Neural Training
-                    <ArrowRight className="ml-3 h-6 w-6" />
                   </Link>
                 </Button>
               </motion.div>
             </motion.div>
 
             {/* Live Stats Ticker */}
-            <motion.div
-              className="mt-12 flex justify-center items-center space-x-8 text-sm text-muted-foreground"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 3, duration: 1 }}
-            >
-              <div className="flex items-center">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2" />
-                <ReactTyped
-                  strings={["SYSTEM ONLINE"]}
-                  typeSpeed={50}
-                  showCursor={false}
-                  startDelay={3500}
-                />
-              </div>
-              <div className="flex items-center">
-                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse mr-2" />
-                <ReactTyped
-                  strings={["AI ACTIVE"]}
-                  typeSpeed={50}
-                  showCursor={false}
-                  startDelay={4000}
-                />
-              </div>
-              <div className="flex items-center">
-                <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse mr-2" />
-                <ReactTyped
-                  strings={["THREAT LEVEL: MINIMAL"]}
-                  typeSpeed={50}
-                  showCursor={false}
-                  startDelay={4500}
-                />
-              </div>
-            </motion.div>
+              <motion.div
+                className="mt-12 flex justify-center items-center space-x-8 text-sm text-muted-foreground"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 3, duration: 1 }}
+              >
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse mr-2" />
+                  SYSTEM ONLINE
+                </div>
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse mr-2" />
+                  AI ACTIVE
+                </div>
+                <div className="flex items-center">
+                  <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse mr-2" />
+                  THREAT LEVEL: MINIMAL
+                </div>
+              </motion.div>
           </motion.div>
         </div>
 
@@ -346,12 +247,7 @@ export function Home() {
             viewport={{ once: true }}
           >
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              <ReactTyped
-                strings={["REAL-TIME THREAT METRICS"]}
-                typeSpeed={60}
-                showCursor={false}
-                startDelay={500}
-              />
+                REAL-TIME THREAT METRICS
             </h2>
           </motion.div>
 
@@ -392,12 +288,7 @@ export function Home() {
                     whileInView={{ scale: 1 }}
                     transition={{ delay: index * 0.15 + 0.3, type: "spring", stiffness: 200 }}
                   >
-                    <ReactTyped
-                      strings={[stat.value]}
-                      typeSpeed={50}
-                      showCursor={false}
-                      startDelay={(index * 300) + 1000}
-                    />
+                    {stat.value}
                   </motion.div>
                   
                   <div className="text-sm text-muted-foreground font-medium">
@@ -434,12 +325,7 @@ export function Home() {
               viewport={{ once: true }}
             >
               <span className="gradient-primary bg-clip-text text-transparent">
-                <ReactTyped
-                  strings={["NEURAL DEFENSE MATRIX"]}
-                  typeSpeed={60}
-                  showCursor={false}
-                  startDelay={300}
-                />
+                  NEURAL DEFENSE MATRIX
               </span>
             </motion.h2>
             <motion.p 
@@ -554,17 +440,7 @@ export function Home() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <ReactTyped
-                strings={[
-                  "INITIALIZE NEURAL NETWORK",
-                  "JOIN THE CYBER ALLIANCE",
-                  "ACTIVATE QUANTUM SHIELD"
-                ]}
-                typeSpeed={60}
-                backSpeed={40}
-                startDelay={500}
-                loop
-              />
+              INITIALIZE NEURAL NETWORK
             </motion.h2>
             
             <motion.p 
@@ -658,12 +534,7 @@ export function Home() {
                   <span className="text-white font-semibold">AI PROCESSING</span>
                 </div>
                 <div className="text-blue-300 text-2xl font-bold">
-                  <ReactTyped
-                    strings={["24/7 ACTIVE"]}
-                    typeSpeed={50}
-                    showCursor={false}
-                    startDelay={2000}
-                  />
+                    24/7 ACTIVE
                 </div>
               </div>
               
