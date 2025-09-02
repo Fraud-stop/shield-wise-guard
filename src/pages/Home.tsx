@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useState } from "react";
-// ...existing code...
+import { Typewriter } from "react-simple-typewriter";
+import { CodeRain } from "@/components/CodeRain";
 
 // Floating particle component
 const FloatingParticle = ({ delay = 0, duration = 4, x = 0, y = 0, icon: Icon }: any) => (
@@ -79,13 +80,12 @@ export function Home() {
   ];
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-    {/* Animated Background */}
+    <div className="min-h-screen relative overflow-x-hidden">
     {/* Prevent horizontal overflow for all children */}
-    <style>{`body { overflow-x: hidden !important; }`}</style>
+    <style>{`html, body { overflow-x: hidden !important; }`}</style>
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/20" />
-      
-      {/* Matrix Code Rain removed */}
+      {/* Matrix Code Rain */}
+      <CodeRain height={300} />
       {/* Floating Particles */}
       <FloatingParticle delay={0} x={100} y={200} icon={Shield} />
       <FloatingParticle delay={1} x={300} y={150} icon={Lock} />
@@ -130,15 +130,15 @@ export function Home() {
                 transition={{ delay: 0.6, duration: 1 }}
               >
                 <motion.span>
-                    FRAUD STOP
-                </motion.span>
-                <motion.span 
-                  className="block text-foreground text-3xl md:text-5xl mt-4"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1.5, duration: 0.8 }}
-                >
-                  Next-Gen Cyber Shield
+                  <Typewriter
+                    words={["FRAUD STOP", "Next-Gen Cyber Shield"]}
+                    loop={0}
+                    cursor
+                    cursorStyle="_"
+                    typeSpeed={70}
+                    deleteSpeed={50}
+                    delaySpeed={1500}
+                  />
                 </motion.span>
             </motion.h1>
             
@@ -237,7 +237,9 @@ export function Home() {
       </section>
 
       {/* Advanced Stats Section */}
-      <section className="py-20 px-4 relative bg-muted/20 backdrop-blur-sm border-y border-border/30">
+      <section
+        className="py-20 px-4 relative border-y border-border/30 bg-white dark:bg-[rgba(255,255,255,0.05)] night:bg-[rgba(255,255,255,0.05)]"
+      >
         <div className="container mx-auto">
           <motion.div
             className="text-center mb-12"
@@ -265,7 +267,9 @@ export function Home() {
                   transition: { duration: 0.3 }
                 }}
               >
-                <Card className="p-6 text-center bg-card/30 backdrop-blur-md border-border/50 hover:shadow-security transition-all duration-500 hover:border-primary/30 group relative overflow-hidden">
+                <Card
+                  className="p-6 text-center border-border/50 hover:shadow-security transition-all duration-500 hover:border-primary/30 group relative overflow-hidden bg-white dark:bg-card/30 night:bg-card/30"
+                >
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   />
@@ -281,7 +285,6 @@ export function Home() {
                   >
                     <stat.icon className={`h-6 w-6 ${stat.color}`} />
                   </motion.div>
-                  
                   <motion.div 
                     className="text-3xl font-bold text-foreground mb-2"
                     initial={{ scale: 0 }}
@@ -290,11 +293,9 @@ export function Home() {
                   >
                     {stat.value}
                   </motion.div>
-                  
                   <div className="text-sm text-muted-foreground font-medium">
                     {stat.label}
                   </div>
-                  
                   <motion.div
                     className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-primary to-accent"
                     initial={{ width: 0 }}

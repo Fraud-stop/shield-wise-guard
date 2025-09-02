@@ -21,6 +21,8 @@ export function Dashboard() {
   }, [] as { province: string; scamCount: number }[])
   .sort((a, b) => b.scamCount - a.scamCount);
 
+  console.log('provinceData', provinceData);
+
   const monthlyData = [
     { month: "Jan", scams: 3750, blocked: 3652 },
     { month: "Feb", scams: 4220, blocked: 4108 },
@@ -65,7 +67,7 @@ export function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen py-20 px-4">
+    <div className="min-h-screen py-20 px-4 bg-background text-foreground transition-colors duration-300">
       <div className="container mx-auto max-w-7xl">
         {/* Header */}
         <motion.div
@@ -90,27 +92,24 @@ export function Dashboard() {
           transition={{ delay: 0.1 }}
           className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12"
         >
-          <Card className="p-6 text-center bg-card/50 backdrop-blur-sm shadow-security">
+          <Card className="p-6 text-center bg-card/50 backdrop-blur-sm shadow-security dark:bg-card/70 dark:text-card-foreground">
             <Shield className="h-8 w-8 text-primary mx-auto mb-3" />
             <div className="text-2xl font-bold text-primary mb-1">98.3%</div>
             <div className="text-sm text-muted-foreground">Detection Rate</div>
           </Card>
-          
-          <Card className="p-6 text-center bg-card/50 backdrop-blur-sm shadow-security">
+          <Card className="p-6 text-center bg-card/50 backdrop-blur-sm shadow-security dark:bg-card/70 dark:text-card-foreground">
             <AlertTriangle className="h-8 w-8 text-destructive mx-auto mb-3" />
             <div className="text-2xl font-bold text-destructive mb-1">
               {scamReports.reduce((sum, report) => sum + report.reportCount, 0)}
             </div>
             <div className="text-sm text-muted-foreground">Total Reports</div>
           </Card>
-
-          <Card className="p-6 text-center bg-card/50 backdrop-blur-sm shadow-security">
+          <Card className="p-6 text-center bg-card/50 backdrop-blur-sm shadow-security dark:bg-card/70 dark:text-card-foreground">
             <Users className="h-8 w-8 text-success mx-auto mb-3" />
             <div className="text-2xl font-bold text-success mb-1">27,642</div>
             <div className="text-sm text-muted-foreground">Protected Users</div>
           </Card>
-
-          <Card className="p-6 text-center bg-card/50 backdrop-blur-sm shadow-security">
+          <Card className="p-6 text-center bg-card/50 backdrop-blur-sm shadow-security dark:bg-card/70 dark:text-card-foreground">
             <Calendar className="h-8 w-8 text-warning mx-auto mb-3" />
             <div className="text-2xl font-bold text-warning mb-1">5,120</div>
             <div className="text-sm text-muted-foreground">This Month</div>
@@ -126,7 +125,7 @@ export function Dashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+              <Card className="p-6 bg-card/50 backdrop-blur-sm dark:bg-card/70 dark:text-card-foreground">
                 <h3 className="text-lg font-semibold mb-6">Monthly Fraud Trends</h3>
                 <ResponsiveContainer width="100%" height={300}>
                   <LineChart data={monthlyData}>
@@ -166,18 +165,13 @@ export function Dashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+              <Card className="p-6 bg-card/50 backdrop-blur-sm dark:bg-card/70 dark:text-card-foreground border-2 border-blue-500">
                 <h3 className="text-lg font-semibold mb-6">Scams by Province</h3>
                 <ResponsiveContainer width="100%" height={400}>
                   <BarChart data={provinceData} layout="horizontal">
                     <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                    <XAxis type="number" stroke="hsl(var(--muted-foreground))" />
-                    <YAxis 
-                      dataKey="province" 
-                      type="category" 
-                      width={100}
-                      stroke="hsl(var(--muted-foreground))"
-                    />
+                    <XAxis dataKey="province" type="category" stroke="hsl(var(--muted-foreground))" tick={{ fill: 'currentColor' }} />
+                    <YAxis type="number" stroke="hsl(var(--muted-foreground))" tick={{ fill: 'currentColor' }} />
                     <Tooltip 
                       contentStyle={{ 
                         backgroundColor: "hsl(var(--popover))", 
@@ -187,7 +181,7 @@ export function Dashboard() {
                     />
                     <Bar 
                       dataKey="scamCount" 
-                      fill="hsl(var(--primary))"
+                      fill="#3b82f6"
                       radius={[0, 4, 4, 0]}
                     />
                   </BarChart>
@@ -204,7 +198,7 @@ export function Dashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+              <Card className="p-6 bg-card/50 backdrop-blur-sm dark:bg-card/70 dark:text-card-foreground">
                 <h3 className="text-lg font-semibold mb-6">Scam Categories</h3>
                 <ResponsiveContainer width="100%" height={200}>
                   <PieChart>
@@ -247,7 +241,7 @@ export function Dashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
             >
-              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+              <Card className="p-6 bg-card/50 backdrop-blur-sm dark:bg-card/70 dark:text-card-foreground">
                 <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
                   <MapPin className="h-5 w-5" />
                   Risk Hotspots
@@ -276,7 +270,7 @@ export function Dashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
             >
-              <Card className="p-6 bg-card/50 backdrop-blur-sm">
+              <Card className="p-6 bg-card/50 backdrop-blur-sm dark:bg-card/70 dark:text-card-foreground">
                 <h3 className="text-lg font-semibold mb-6">Recent Activity</h3>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
@@ -320,7 +314,7 @@ export function Dashboard() {
           transition={{ delay: 0.7 }}
           className="mt-12"
         >
-          <Card className="p-8 gradient-security text-center">
+          <Card className="p-8 gradient-security text-center dark:bg-card/70 dark:text-card-foreground">
             <h3 className="text-2xl font-bold text-white mb-4">
               Data Export & API Access
             </h3>
