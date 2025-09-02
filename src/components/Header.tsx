@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Shield, Menu, X } from "lucide-react";
+import { Laptop, User, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
@@ -25,8 +25,9 @@ export function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="p-2 gradient-primary rounded-lg glow-security transition-smooth group-hover:scale-105">
-              <Shield className="h-6 w-6 text-white" />
+            <div className="flex items-center p-2 gradient-primary rounded-lg glow-security transition-smooth group-hover:scale-105">
+              <Laptop className="h-6 w-6 text-white mr-1" />
+              <User className="h-6 w-6 text-white" />
             </div>
             <span className="text-xl font-bold gradient-primary bg-clip-text text-transparent">
               Fraud Stop

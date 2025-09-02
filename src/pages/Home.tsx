@@ -31,9 +31,9 @@ const FloatingParticle = ({ delay = 0, duration = 4, x = 0, y = 0, icon: Icon }:
 );
 export function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const isMobile = window.innerWidth < 640;
-  const isDesktop = window.innerWidth >= 640;
-  const [showTypewriter, setShowTypewriter] = useState(isDesktop);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+  const [showTypewriter, setShowTypewriter] = useState(true);
+  const [typeDone, setTypeDone] = useState(false);
   const controls = useAnimation();
 
   useEffect(() => {
@@ -45,13 +45,15 @@ export function Home() {
   }, []);
 
   useEffect(() => {
-    if (isDesktop) {
-      const timer = setTimeout(() => setShowTypewriter(false), 3500);
-      return () => clearTimeout(timer);
-    } else {
-      setShowTypewriter(false);
-    }
-  }, [isDesktop]);
+    const handleResize = () => {
+      const mobile = window.innerWidth < 640;
+      setIsMobile(mobile);
+      setShowTypewriter(true);
+      setTypeDone(false);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const stats = [
     { label: "Threats Blocked", value: "12,847", icon: Shield, color: "text-red-400" },
@@ -142,18 +144,34 @@ export function Home() {
                 transition={{ delay: 0.6, duration: 1 }}
               >
                 <motion.span>
-                  {showTypewriter ? (
+                  {isMobile ? (
+                    showTypewriter && !typeDone ? (
+                      <Typewriter
+                        words={["FRAUD STOP - Next-Gen Cyber Shield"]}
+                        loop={1}
+                        cursor
+                        cursorStyle="_"
+                        typeSpeed={60}
+                        deleteSpeed={40}
+                        delaySpeed={1200}
+                        onLoopDone={() => {
+                          setTypeDone(true);
+                          setShowTypewriter(false);
+                        }}
+                      />
+                    ) : (
+                      "FRAUD STOP - Next-Gen Cyber Shield"
+                    )
+                  ) : (
                     <Typewriter
                       words={["FRAUD STOP", "Next-Gen Cyber Shield"]}
-                      loop={1}
+                      loop={Infinity}
                       cursor
                       cursorStyle="_"
                       typeSpeed={60}
                       deleteSpeed={40}
                       delaySpeed={1200}
                     />
-                  ) : (
-                    "FRAUD STOP - Next-Gen Cyber Shield"
                   )}
                 </motion.span>
             </motion.h1>
