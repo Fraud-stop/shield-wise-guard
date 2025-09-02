@@ -57,7 +57,10 @@ const CodeRain = () => {
           key={i}
           className="absolute text-xs text-primary/20 font-mono"
           initial={{ y: -20, x: Math.random() * window.innerWidth }}
-          animate={{ y: window.innerHeight + 20 }}
+            animate={{
+              y: window.innerHeight + 20,
+              x: Math.min(Math.max(0, Math.random() * window.innerWidth), window.innerWidth - 100)
+            }}
           transition={{
             duration: Math.random() * 3 + 2,
             delay: i * 0.5,
@@ -124,7 +127,9 @@ export function Home() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Animated Background */}
+    {/* Animated Background */}
+    {/* Prevent horizontal overflow for all children */}
+    <style>{`body { overflow-x: hidden !important; }`}</style>
       <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted/20" />
       
       {/* Matrix Code Rain */}
@@ -174,52 +179,30 @@ export function Home() {
             </motion.div>
             
             <motion.h1 
-              className="text-4xl md:text-7xl font-bold mb-6 leading-tight"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-            >
-              <motion.span 
-                className="gradient-primary bg-clip-text text-transparent block"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                className="text-5xl md:text-7xl font-extrabold text-primary mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 1 }}
               >
-                <ReactTyped
-                  strings={["FRAUD STOP"]}
-                  typeSpeed={80}
-                  showCursor={true}
-                  cursorChar="|"
-                />
-              </motion.span>
-              <motion.span 
-                className="block text-foreground text-3xl md:text-5xl mt-4"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.5, duration: 0.8 }}
-              >
-                Next-Gen Cyber Shield
-              </motion.span>
+                <motion.span>
+                  <ReactTyped
+                    strings={["FRAUD STOP"]}
+                    typeSpeed={80}
+                    showCursor={true}
+                    cursorChar="|"
+                  />
+                </motion.span>
+                <motion.span 
+                  className="block text-foreground text-3xl md:text-5xl mt-4"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.5, duration: 0.8 }}
+                >
+                  Next-Gen Cyber Shield
+                </motion.span>
             </motion.h1>
             
-            <motion.p 
-              className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 2, duration: 0.8 }}
-            >
-              <ReactTyped
-                strings={[
-                  "Military-grade AI algorithms detect threats in milliseconds...",
-                  "Blockchain-secured community intelligence protects millions...",
-                  "Zero-knowledge architecture ensures complete privacy..."
-                ]}
-                typeSpeed={30}
-                backSpeed={20}
-                startDelay={2500}
-                loop
-              />
-            </motion.p>
+            {/* Removed broken <motion.p> block */}
 
             <motion.div 
               className="flex flex-col sm:flex-row gap-6 justify-center items-center"
